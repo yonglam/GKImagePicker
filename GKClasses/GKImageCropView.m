@@ -55,6 +55,8 @@ static CGRect GKScaleRect(CGRect rect, CGFloat scale)
 @property (nonatomic, strong) GKImageCropOverlayView *cropOverlayView;
 @property (nonatomic, assign) CGFloat xOffset;
 @property (nonatomic, assign) CGFloat yOffset;
+@property (nonatomic, assign) CGFloat faktoredWidth;
+@property (nonatomic, assign) CGFloat faktoredHeight;
 
 - (CGRect)_calcVisibleRectForResizeableCropArea;
 - (CGRect)_calcVisibleRectForCropArea;
@@ -127,8 +129,10 @@ static CGRect GKScaleRect(CGRect rect, CGFloat scale)
 
 -(CGRect)_calcVisibleRectForCropArea{
     //scaled width/height in regards of real width to crop width
-    CGFloat scaleWidth = self.imageToCrop.size.width / self.cropSize.width;
-    CGFloat scaleHeight = self.imageToCrop.size.height / self.cropSize.height;
+//    CGFloat scaleWidth = self.imageToCrop.size.width / self.cropSize.width;
+//    CGFloat scaleHeight = self.imageToCrop.size.height / self.cropSize.height;
+    CGFloat scaleWidth = self.imageToCrop.size.width / self.faktoredWidth;
+    CGFloat scaleHeight = self.imageToCrop.size.height / self.faktoredHeight;
     CGFloat scale = 0.0f;
     
     if (self.cropSize.width > self.cropSize.height) {
@@ -240,23 +244,35 @@ static CGRect GKScaleRect(CGRect rect, CGFloat scale)
     CGFloat faktoredHeight = 0.f;
     CGFloat faktoredWidth = 0.f;
     
-    if(width > height){
-        
+//    if(width > height){
+    
         faktor = width / size.width;
         faktoredWidth = size.width;
         faktoredHeight =  height / faktor;
         
-    } else {
-        
-        faktor = height / size.height;
-        faktoredWidth = width / faktor;
-        faktoredHeight =  size.height;
-    }
+//    } else {
+//        
+//        faktor = height / size.height;
+//        faktoredWidth = width / faktor;
+//        faktoredHeight =  size.height;
+//    }
     
     self.cropOverlayView.frame = self.bounds;
     self.scrollView.frame = CGRectMake(xOffset, yOffset, size.width, size.height);
-    self.scrollView.contentSize = CGSizeMake(size.width, size.height);
+//    self.scrollView.contentSize = CGSizeMake(size.width, size.height);
     self.imageView.frame = CGRectMake(0, floor((size.height - faktoredHeight) * 0.5), faktoredWidth, faktoredHeight);
+    self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.imageView.frame), CGRectGetHeight(self.imageView.frame));
+    
+    if (CGRectGetHeight(self.imageView.frame) - size.height > 0) {
+        self.scrollView.contentOffset = CGPointMake(0, (CGRectGetHeight(self.imageView.frame) - size.height) / 2.);
+    }
+    else{
+        self.scrollView.contentOffset = CGPointMake(0, 0);
+    }
+    self.scrollView.contentInset = UIEdgeInsetsZero;
+
+    self.faktoredWidth = faktoredWidth;
+    self.faktoredHeight = faktoredHeight;
 }
 
 #pragma mark -

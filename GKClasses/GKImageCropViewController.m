@@ -51,8 +51,8 @@
 - (void)_setupNavigationBar{
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel 
-                                                                                          target:self 
-                                                                                          action:@selector(_actionCancel)];
+                                                                            target:self
+                                                                            action:@selector(_actionCancel)];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"GKIuse", @"")
                                                                               style:UIBarButtonItemStyleBordered 
@@ -149,6 +149,7 @@
 - (void)_setupToolbar{
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
         self.toolbar = [[UIToolbar alloc] initWithFrame:CGRectZero];
+        self.toolbar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         
 		
         if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1) {
@@ -167,7 +168,7 @@
         if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1) {
             info.text = @"";
         } else {
-            info.text = NSLocalizedString(@"GKImoveAndScale", @"");
+//            info.text = NSLocalizedString(@"GKImoveAndScale", @"");
         }
         
         info.textColor = [UIColor colorWithRed:0.173 green:0.173 blue:0.173 alpha:1];
@@ -224,7 +225,7 @@
     [super viewWillLayoutSubviews];
     
     self.imageCropView.frame = self.view.bounds;
-    self.toolbar.frame = CGRectMake(0, CGRectGetHeight(self.view.frame) - 54, 320, 54);
+    self.toolbar.frame = CGRectMake(0, CGRectGetHeight(self.view.frame) - 54, self.view.width, 54);
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

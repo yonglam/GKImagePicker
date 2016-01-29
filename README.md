@@ -1,5 +1,7 @@
 ### GKImagePicker
 
+Thanks to @gekitz who make this amazing [control](https://github.com/gekitz/GKImagePicker). I only added the feature to make the image scale to fit in screen and fixed some bugs.
+
 Ever wanted a custom crop area for the UIImagePickerController? Now you can have it with _GKImagePicker_. Just set your custom crop area and that's it. Just 4 lines of code. If you don't set it, it uses the same crop area as the default UIImagePickerController.
 
 ### How to use it
@@ -19,16 +21,6 @@ Ever wanted a custom crop area for the UIImagePickerController? Now you can have
      [self presentModalViewController:self.imagePicker.imagePickerController animated:YES];
      
 
-This code results into the following controller + crop area:
-
-![Sample Crop Image](https://dl.dropbox.com/u/311618/GKImageCrop/IMG_1509.PNG)
-
-It's even possible to let the user adjust the crop area (thanks to [@pathonhauser](http://www.twitter.com/pathonhauser) for this pull request) by setting one additional property:
-	
-	self.imagePicker.resizeableCropArea = YES;
-     
-This code results into the following controller + adjustable crop area:
-![Sample Crop Image Adjustable](https://dl.dropbox.com/u/311618/GKImageCrop/IMG_2299.PNG)
 ### License
 Under MIT. See license file for details.
 
